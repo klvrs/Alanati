@@ -144,11 +144,13 @@
   <a href="#">Home</a>
   <a href="#products">Products</a>
   <a href="cart.html">Cart</a>
-    <div style="display: flex; align-items: center; gap: 1rem;">
-    <div><a href="cart.html" style="color:white; text-decoration:none;">🛒 <span id="cart-count">0</span></a></div>
-    <div id="user-section" style="display: flex; align-items: center; gap: 0.5rem;">
+   <div style="margin-left: auto; position: relative;" id="user-wrapper">
+    <div id="user-section" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
       <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User" width="30" height="30" />
-      <span id="user-name" style="font-size: 1rem;"></span>
+      <span id="user-name" style="font-size: 1rem; color: white;"></span>
+    </div>
+    <div id="logout-dropdown" style="display: none; position: absolute; right: 0; background: white; color: black; padding: 0.5rem; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-size: 0.9rem;">
+      <button id="logout-btn" style="background: none; border: none; cursor: pointer; font-family: var(--font-title);">Logout</button>
     </div>
   </div>
 </nav>
@@ -290,6 +292,29 @@ function updateCartUI(id) {
     cartCountSpan.textContent = totalQty;
   };
 
+    // Logout dropdown toggle
+  const userSection = document.getElementById('user-section');
+  const logoutDropdown = document.getElementById('logout-dropdown');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  userSection.addEventListener('click', () => {
+    logoutDropdown.style.display = logoutDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    auth.signOut().then(() => {
+      localStorage.removeItem('cart'); // Optional: clear cart on logout
+      window.location.href = "login.html";
+    });
+  });
+
+  // Close dropdown if clicked outside
+  document.addEventListener('click', (e) => {
+    if (!document.getElementById('user-wrapper').contains(e.target)) {
+      logoutDropdown.style.display = 'none';
+    }
+  });
+
   renderProducts();
   updateCartCount();
 
@@ -303,5 +328,6 @@ function updateCartUI(id) {
 </script>
 </body>
 </html>
+
 
 
