@@ -120,7 +120,7 @@
     }
 
     #cart-count {
-      background: red;
+      background: var(--vintage-gold);
       color: white;
       border-radius: 50%;
       padding: 0 8px;
@@ -137,20 +137,20 @@
 </head>
 <body>
 <header>
-  <div>అలనాటి</div>
-  <div style="display: flex; align-items: center; gap: 1rem;">
-    <div><a href="cart.html" style="color:white; text-decoration:none;">🛒 <span id="cart-count">0</span></a></div>
-    <div id="user-section" style="display: flex; align-items: center; gap: 0.5rem;">
-      <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User" width="30" height="30" />
-      <span id="user-name" style="font-size: 1rem;"></span>
-    </div>
-  </div>
+ అలనాటి
 </header>
 
 <nav>
   <a href="#">Home</a>
   <a href="#products">Products</a>
   <a href="cart.html">Cart</a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+    <div><a href="cart.html" style="color:white; text-decoration:none;">🛒 <span id="cart-count">0</span></a></div>
+    <div id="user-section" style="display: flex; align-items: center; gap: 0.5rem;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User" width="30" height="30" />
+      <span id="user-name" style="font-size: 1rem;"></span>
+    </div>
+  </div>
 </nav>
 
 <div class="hero">
@@ -220,15 +220,24 @@
       item.className = "product-card";
       const existing = cart.find(ci => ci.id === p.id);
       const qty = existing ? existing.qty : 0;
-      item.innerHTML = `
-        <img src="${p.image}" alt="${p.name}" />
-        <h3>${p.name}</h3>
-        <p>${p.description}</p>
-        <p><strong>₹${p.price}</strong></p>
-        <button onclick="addToCart(${p.id})">Add to Cart</button>
-        ${qty > 0 ? `<span class="qty-label">+ ${qty}</span>` : ''}
-      `;
-      productContainer.appendChild(item);
+     item.innerHTML = `
+  <img src="${p.image}" alt="${p.name}" />
+  <h3>${p.name}</h3>
+  <p>${p.description}</p>
+  <p><strong>₹${p.price}</strong></p>
+  <div id="cart-actions-${p.id}">
+    ${qty > 0
+      ? `
+        <button onclick="decreaseQty(${p.id})">➖</button>
+        <span style="margin: 0 10px;">${qty}</span>
+        <button onclick="addToCart(${p.id})">➕</button>
+      `
+      : `<button onclick="addToCart(${p.id})">Add to Cart</button>`
+    }
+  </div>
+`;
+productContainer.appendChild(item);
+     
     });
   };
 
@@ -240,13 +249,41 @@
         existing.qty += 1;
       } else {
         const prod = products.find(p => p.id === id);
-        cart.push({ ...prod, qty: 1 });
+       cart.push({ id, name: prod.name, price: prod.price, qty: 1 });
+
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
       updateCartCount();
-      renderProducts();
+      updateCartUI(id);
     });
   };
+ window.decreaseQty = function (id) {
+  const index = cart.findIndex(item => item.id === id);
+  if (index > -1) {
+    cart[index].qty -= 1;
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1); // Remove item if qty is 0
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    updateCartUI(id);
+  }
+}
+function updateCartUI(id) {
+  const actionDiv = document.getElementById(`cart-actions-${id}`);
+  const item = cart.find(i => i.id === id);
+
+  if (!item) {
+    actionDiv.innerHTML = `<button onclick="addToCart(${id})">Add to Cart</button>`;
+    return;
+  }
+
+  actionDiv.innerHTML = `
+    <button onclick="decreaseQty(${id})">➖</button>
+    <span style="margin: 0 10px;">${item.qty}</span>
+    <button onclick="addToCart(${id})">➕</button>
+  `;
+}
 
   const updateCartCount = () => {
     const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -266,4 +303,5 @@
 </script>
 </body>
 </html>
+
 
