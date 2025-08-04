@@ -142,9 +142,10 @@
 <nav>
   <a href="#">Home</a>
   <a href="#products">Products</a>
+  <div>
   <a href="cart.html">Cart</a>
+  <a href="cart.html" style="color:white; text-decoration:none;">🛒 <span id="cart-count">0</span></a></div>
     <div style="display: flex; align-items: right; gap: 1rem;">
-    <div><a href="cart.html" style="color:white; text-decoration:none;">🛒 <span id="cart-count">0</span></a></div>
    
       <div id="user-section" style="position: relative;">
   <div id="user-info" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
@@ -336,6 +337,7 @@ actionDiv.innerHTML = `<button onclick="addToCart(${id})">Add to Cart</button>`;
 </script>
 </body>
 </html>
+
 
 
 
