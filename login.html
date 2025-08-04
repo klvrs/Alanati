@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | అలనాటి</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      background-image: url('https://img.freepik.com/premium-photo/parchment-texture-background_693838-849.jpg?w=740');
+      background-size: cover;
+      color: #3e2c1c;
+    }
+
+    header {
+      background-color: rgba(107, 77, 48, 0.9);
+      color: #fff8dc;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 28px;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 60px auto;
+      background-color: rgba(255, 248, 220, 0.92);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(80, 50, 20, 0.3);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
+
+    input[type="email"], input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      margin: 12px 0;
+      border: 1px solid #a98d5d;
+      border-radius: 5px;
+      background: #fffaf0;
+    }
+
+    button {
+      background-color: #6a4b33;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #5b3e28;
+    }
+
+   .google-btn {
+  background-color: transparent;
+  border: none;
+  margin-top: 15px;
+}
+.google-btn:hover {
+  background-color: transparent;
+}
+
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #5c4531;
+      font-size: 14px;
+    }
+
+    .link {
+      margin-top: 15px;
+      display: block;
+      color: #6a4b33;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>అలనాటి</header>
+
+  <div class="container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email" required />
+      <input type="password" id="login-password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+
+    <button class="google-btn" id="google-login" title="Sign in with Google">
+  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="height:24px; vertical-align:middle;" />
+</button>
+
+    <a href="signup.html" class="link">Don't have an account? Sign up</a>
+  </div>
+
+  <footer class="footer">
+    &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
+  </footer>
+
+  <!-- Firebase SDK & Login Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAi7lEBt3jcw-TKaPf6k1azwDfghl6jWMo",
+      authDomain: "login-page-8560e.firebaseapp.com",
+      projectId: "login-page-8560e",
+      storageBucket: "login-page-8560e.firebasestorage.app",
+      messagingSenderId: "201520027907",
+      appId: "1:201520027907:web:9d3487a492869495557136",
+      measurementId: "G-JVRNQQ371Y"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    // Email/Password Login
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login successful!");
+        window.location.href = "index.html"; // Change to your landing page
+      } catch (error) {
+        alert("Login failed: " + error.message);
+      }
+    });
+
+    // Google Login
+    document.getElementById("google-login").addEventListener("click", async () => {
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        alert("Google sign-in successful!");
+        window.location.href = "index.html"; // Change to your landing page
+      } catch (error) {
+        alert("Google sign-in failed: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

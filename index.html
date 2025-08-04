@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="author" content="klvrs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>అలనాటి | E-Commerce</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --vintage-bg: #f5f0e1;
+      --vintage-brown: #5c3a21;
+      --vintage-gold: #c9a66b;
+      --font-title: 'Cinzel', serif;
+      --font-script: 'Great Vibes', cursive;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-title);
+      background-color: var(--vintage-bg);
+      color: var(--vintage-brown);
+      background-image: url('https://img.freepik.com/premium-photo/parchment-texture-background_693838-849.jpg?w=740');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--vintage-brown);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      background-color: var(--vintage-gold);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1583337130417-3346a1e3d884');
+      background-size: cover;
+      background-position: center;
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-family: var(--font-script);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .product-card {
+      background-color: #fffaf3;
+      border: 2px solid var(--vintage-gold);
+      padding: 1rem;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .product-card h3 {
+      margin: 0.5rem 0;
+    }
+
+    .product-card button {
+      background-color: var(--vintage-brown);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      font-family: var(--font-title);
+      border-radius: 5px;
+    }
+
+    .footer {
+      background-color: var(--vintage-brown);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+<header>
+    అలానాటి
+</header>
+
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#products">Products</a>
+    <a href="/login.html" class="link" src="./login.html">Login</a>
+    <a href="#cart">Cart</a>
+  </nav>
+
+    <div class="hero">
+    <h1>Step into the Past with Every Gift</h1>
+    </div>
+  <section id="products" class="products">
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/71UeTmoDzWL._AC_SS450_.jpg" alt="Vintage Gift Box">
+      <h3>Vintage Gift Box</h3>
+      <p>Handcrafted with love and nostalgia.</p>
+      <button onclick="window.location.href='login.html'">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://img.freepik.com/premium-photo/vintage-creative-vector-2d-paper-layout-with-watercolor-textures-old-vintage-style-design_655090-201457.jpg" alt="Old Letter Scroll">
+      <h3>Ancient Letter Scroll</h3>
+      <p>Perfect for heartfelt messages.</p>
+      <button onclick="window.location.href='login.html'">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://th.bing.com/th/id/R.7419daec8633d12774498fd990ebf894?rik=f%2fwKGofLRKTdaQ&riu=http%3a%2f%2fspecialyou.in%2fcdn%2fshop%2ffiles%2f71C5TVc-EmL._SL1500.jpg%3fv%3d1736837019%26width%3d2048&ehk=ELD4rdS7YAcRFZJIWpRrmKVjomYCyfTqyJ%2fVFbab5s4%3d&risl=&pid=ImgRaw&r=0" alt="Scented Candle">
+      <h3>Scented Candle</h3>
+      <p>Soothing aroma with vintage packaging.</p>
+      <button onclick="window.location.href='login.html'">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://th.bing.com/th/id/R.2aa7e3a168a40e0cb08884ed8f363071?rik=hQk6s4gyEs5qBQ&riu=http%3a%2f%2fmedia-cache-ak0.pinimg.com%2f736x%2f72%2fe6%2f8b%2f72e68b7f249d3a664493b8f1bdc467a3.jpg&ehk=U6FXid9hjf%2f6iHCtkJ6t5j1I4i60CEIKiMbq%2bmre0%2fo%3d&risl=&pid=ImgRaw&r=0" alt="Ink Pen">
+      <h3>Classic Ink Pen</h3>
+      <p>Relive the art of writing.</p>
+      <button onclick="window.location.href='login.html'">Add to Cart</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    &copy; &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
+  </footer>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAi7lEBt3jcw-TKaPf6k1azwDfghl6jWMo",
+    authDomain: "login-page-8560e.firebaseapp.com",
+    projectId: "login-page-8560e",
+    storageBucket: "login-page-8560e.firebasestorage.app",
+    messagingSenderId: "201520027907",
+    appId: "1:201520027907:web:9d3487a492869495557136",
+    measurementId: "G-JVRNQQ371Y"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+</body>
+</html>
