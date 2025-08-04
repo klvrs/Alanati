@@ -36,8 +36,8 @@
       border-bottom: 1px solid #a98d5d;
     }
 
-     .footer {
-      background-color: var(--vintage-brown);
+    .footer {
+      background-color: #3e2c1c;
       color: white;
       text-align: center;
       padding: 1rem;
@@ -66,6 +66,12 @@
       width: 100%;
       border-radius: 8px;
     }
+
+    .empty {
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
@@ -83,12 +89,12 @@
       <span>Total</span>
       <span id="totalPrice">₹0</span>
     </div>
-    <button class="btn">Place Order</button>
+    <button class="btn" onclick="placeOrder()">Place Order</button>
   </div>
 
- <footer class="footer">
-  &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
-</footer>
+  <footer class="footer">
+    &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
+  </footer>
 
   <script>
     const cartItemsContainer = document.getElementById('cartItems');
@@ -98,6 +104,11 @@
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       cartItemsContainer.innerHTML = '';
       let total = 0;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<div class="empty">Your cart is empty.</div>';
+        return;
+      }
 
       cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
@@ -115,9 +126,15 @@
       totalPriceElement.textContent = `₹${total}`;
     }
 
+    function placeOrder() {
+      if (confirm("Do you want to place the order?")) {
+        localStorage.removeItem('cart');
+        alert("Order placed successfully!");
+        window.location.href = "index.html";
+      }
+    }
+
     loadCart();
   </script>
 </body>
 </html>
-
-
