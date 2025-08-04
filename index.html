@@ -37,7 +37,9 @@
       background-color: var(--vintage-brown);
       color: white;
       padding: 1rem;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 2rem;
       letter-spacing: 2px;
     }
@@ -115,63 +117,49 @@
       padding: 1rem;
       font-size: 0.9rem;
     }
+
+    #cart-count {
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 0 8px;
+      margin-left: 5px;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
-<!-- Inside <header> add a container to align title and profile -->
-<header style="display: flex; justify-content: space-between; align-items: center;">
+<header>
   <div>అలానాటి</div>
-  <div id="user-section" style="margin-right: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-    <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User" width="30" height="30" />
-    <span id="user-name" style="font-size: 1rem;"></span>
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <div><a href="cart.html" style="color:white; text-decoration:none;">🛒 <span id="cart-count">0</span></a></div>
+    <div id="user-section" style="display: flex; align-items: center; gap: 0.5rem;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User" width="30" height="30" />
+      <span id="user-name" style="font-size: 1rem;"></span>
+    </div>
   </div>
 </header>
 
-<!-- Update nav to remove Login and Sign Up -->
 <nav>
   <a href="#">Home</a>
   <a href="#products">Products</a>
-  <a href="./cart.html" class="link" src="./cart.html">Cart</a>
+  <a href="cart.html">Cart</a>
 </nav>
 
+<div class="hero">
+  <h1>Step into the Past with Every Gift</h1>
+</div>
 
+<section id="products" class="products">
+</section>
 
-    <div class="hero">
-    <h1>Step into the Past with Every Gift</h1>
-    </div>
-  <section id="products" class="products">
-    <div class="product-card">
-      <img src="https://m.media-amazon.com/images/I/71UeTmoDzWL._AC_SS450_.jpg" alt="Vintage Gift Box">
-      <h3>Vintage Gift Box</h3>
-      <p>Handcrafted with love and nostalgia.</p>
-      <button onclick="handleAddToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://img.freepik.com/premium-photo/vintage-creative-vector-2d-paper-layout-with-watercolor-textures-old-vintage-style-design_655090-201457.jpg" alt="Old Letter Scroll">
-      <h3>Ancient Letter Scroll</h3>
-      <p>Perfect for heartfelt messages.</p>
-      <button onclick="handleAddToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://th.bing.com/th/id/R.7419daec8633d12774498fd990ebf894?rik=f%2fwKGofLRKTdaQ&riu=http%3a%2f%2fspecialyou.in%2fcdn%2fshop%2ffiles%2f71C5TVc-EmL._SL1500.jpg%3fv%3d1736837019%26width%3d2048&ehk=ELD4rdS7YAcRFZJIWpRrmKVjomYCyfTqyJ%2fVFbab5s4%3d&risl=&pid=ImgRaw&r=0" alt="Scented Candle">
-      <h3>Scented Candle</h3>
-      <p>Soothing aroma with vintage packaging.</p>
-      <button onclick="handleAddToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://th.bing.com/th/id/R.2aa7e3a168a40e0cb08884ed8f363071?rik=hQk6s4gyEs5qBQ&riu=http%3a%2f%2fmedia-cache-ak0.pinimg.com%2f736x%2f72%2fe6%2f8b%2f72e68b7f249d3a664493b8f1bdc467a3.jpg&ehk=U6FXid9hjf%2f6iHCtkJ6t5j1I4i60CEIKiMbq%2bmre0%2fo%3d&risl=&pid=ImgRaw&r=0" alt="Ink Pen">
-      <h3>Classic Ink Pen</h3>
-      <p>Relive the art of writing.</p>
-      <button onclick="handleAddToCart()">Add to Cart</button>
-    </div>
-  </section>
+<footer class="footer">
+  &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
+</footer>
 
-  <footer class="footer">
-    &copy; &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
-  </footer>
-  <script type="module">
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAi7lEBt3jcw-TKaPf6k1azwDfghl6jWMo",
@@ -183,29 +171,88 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Handle Add to Cart
-  window.handleAddToCart = function () {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.href = "cart.html";
-      } else {
-        window.location.href = "login.html";
-      }
+  const userNameSpan = document.getElementById("user-name");
+  const cartCountSpan = document.getElementById("cart-count");
+  const products = [
+    {
+      id: 1,
+      name: "Vintage Gift Box",
+      price: 1200,
+      image: "https://m.media-amazon.com/images/I/71UeTmoDzWL._AC_SS450_.jpg",
+      description: "Handcrafted with love and nostalgia."
+    },
+    {
+      id: 2,
+      name: "Ancient Letter Scroll",
+      price: 800,
+      image: "https://img.freepik.com/premium-photo/vintage-creative-vector-2d-paper-layout-with-watercolor-textures-old-vintage-style-design_655090-201457.jpg",
+      description: "Perfect for heartfelt messages."
+    },
+    {
+      id: 3,
+      name: "Scented Candle",
+      price: 900,
+      image: "https://th.bing.com/th/id/R.7419daec8633d12774498fd990ebf894?rik=f%2fwKGofLRKTdaQ&riu=http%3a%2f%2fspecialyou.in%2fcdn%2fshop%2ffiles%2f71C5TVc-EmL._SL1500.jpg%3fv%3d1736837019%26width%3d2048&ehk=ELD4rdS7YAcRFZJIWpRrmKVjomYCyfTqyJ%2fVFbab5s4%3d&risl=&pid=ImgRaw&r=0",
+      description: "Soothing aroma with vintage packaging."
+    },
+    {
+      id: 4,
+      name: "Classic Ink Pen",
+      price: 500,
+      image: "https://th.bing.com/th/id/R.2aa7e3a168a40e0cb08884ed8f363071?rik=hQk6s4gyEs5qBQ&riu=http%3a%2f%2fmedia-cache-ak0.pinimg.com%2f736x%2f72%2fe6%2f8b%2f72e68b7f249d3a664493b8f1bdc467a3.jpg&ehk=U6FXid9hjf%2f6iHCtkJ6t5j1I4i60CEIKiMbq%2bmre0%2fo%3d&risl=&pid=ImgRaw&r=0",
+      description: "Relive the art of writing."
+    }
+  ];
+
+  const productContainer = document.getElementById("products");
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const renderProducts = () => {
+    productContainer.innerHTML = "";
+    products.forEach(p => {
+      const item = document.createElement("div");
+      item.className = "product-card";
+      item.innerHTML = `
+        <img src="${p.image}" alt="${p.name}" />
+        <h3>${p.name}</h3>
+        <p>${p.description}</p>
+        <p><strong>₹${p.price}</strong></p>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      `;
+      productContainer.appendChild(item);
     });
   };
 
-  // Show user info in header
-  const userNameSpan = document.getElementById("user-name");
+  window.addToCart = function (id) {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return window.location.href = "login.html";
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        const prod = products.find(p => p.id === id);
+        cart.push({ ...prod, qty: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+    });
+  }
+
+  const updateCartCount = () => {
+    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+    cartCountSpan.textContent = totalQty;
+  };
+
+  renderProducts();
+  updateCartCount();
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const name = user.displayName || user.email;
-      userNameSpan.textContent = name;
+      userNameSpan.textContent = user.displayName || user.email;
     } else {
       userNameSpan.innerHTML = `<a href="login.html" style="color: white; text-decoration: underline;">Login</a>`;
     }
   });
 </script>
-
 </body>
 </html>
