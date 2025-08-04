@@ -291,14 +291,13 @@ actionDiv.innerHTML = `<button onclick="addToCart(${id})">Add to Cart</button>`;
     <span style="margin: 0 10px;">${item.qty}</span>
     <button onclick="addToCart(${id})">➕</button>
   `;
-
+}
   const updateCartCount = () => {
     const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
     cartCountSpan.textContent = totalQty;
   };
 
-  renderProducts();
-  updateCartCount();
+ 
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -331,10 +330,12 @@ actionDiv.innerHTML = `<button onclick="addToCart(${id})">Add to Cart</button>`;
       window.location.href = "login.html";
     });
   });
-
+ renderProducts();
+  updateCartCount();
 
 </script>
 </body>
 </html>
+
 
 
