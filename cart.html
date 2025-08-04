@@ -42,28 +42,79 @@
       font-size: 14px;
       color: #5c4531;
     }
+
+    .header {
+      background-color: rgba(255, 248, 220, 0.9);
+      padding: 10px 20px;
+      font-size: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #a98d5d;
+    }
+
+    .btn {
+      background-color: #5c4531;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
+
+  <div class="header">
+    <span style="font-size: 20px;">🛍️ Cart</span>
+    <a href="index.html" style="text-decoration: none; color: #3e2c1c;">🏠 Home</a>
+  </div>
+
   <div class="container">
     <h2>Your Cart</h2>
-    <div class="item">
-      <span>Vintage Saree</span>
-      <span>₹2500</span>
-    </div>
-    <div class="item">
-      <span>Handcrafted Blouse</span>
-      <span>₹1500</span>
-    </div>
-    <hr>
+    <div id="cartItems"></div>
+    <hr />
     <div class="item" style="font-weight: bold;">
       <span>Total</span>
-      <span>₹4000</span>
+      <span id="totalPrice">₹0</span>
     </div>
+    <button class="btn">Place Order</button>
   </div>
 
   <div class="footer">
     Designed by klvrs © 2025
   </div>
+
+  <script>
+    const cartItemsContainer = document.getElementById('cartItems');
+    const totalPriceElement = document.getElementById('totalPrice');
+
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.classList.add('item');
+        div.innerHTML = `
+          <span>${item.name} (x${item.quantity})</span>
+          <span>₹${itemTotal}</span>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      totalPriceElement.textContent = `₹${total}`;
+    }
+
+    loadCart();
+  </script>
 </body>
 </html>
