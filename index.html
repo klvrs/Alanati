@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,11 +127,17 @@
       margin-left: 5px;
       font-size: 0.9rem;
     }
+
+    .qty-label {
+      margin-left: 10px;
+      font-weight: bold;
+      color: var(--vintage-brown);
+    }
   </style>
 </head>
 <body>
 <header>
-  <div>అలానాటి</div>
+  <div>అలనాటి</div>
   <div style="display: flex; align-items: center; gap: 1rem;">
     <div><a href="cart.html" style="color:white; text-decoration:none;">🛒 <span id="cart-count">0</span></a></div>
     <div id="user-section" style="display: flex; align-items: center; gap: 0.5rem;">
@@ -150,8 +157,7 @@
   <h1>Step into the Past with Every Gift</h1>
 </div>
 
-<section id="products" class="products">
-</section>
+<section id="products" class="products"></section>
 
 <footer class="footer">
   &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
@@ -204,7 +210,7 @@
     }
   ];
 
-  const productContainer = document.getElementById("products");
+   const productContainer = document.getElementById("products");
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const renderProducts = () => {
@@ -212,12 +218,15 @@
     products.forEach(p => {
       const item = document.createElement("div");
       item.className = "product-card";
+      const existing = cart.find(ci => ci.id === p.id);
+      const qty = existing ? existing.qty : 0;
       item.innerHTML = `
         <img src="${p.image}" alt="${p.name}" />
         <h3>${p.name}</h3>
         <p>${p.description}</p>
         <p><strong>₹${p.price}</strong></p>
         <button onclick="addToCart(${p.id})">Add to Cart</button>
+        ${qty > 0 ? `<span class="qty-label">+ ${qty}</span>` : ''}
       `;
       productContainer.appendChild(item);
     });
@@ -235,8 +244,9 @@
       }
       localStorage.setItem("cart", JSON.stringify(cart));
       updateCartCount();
+      renderProducts();
     });
-  }
+  };
 
   const updateCartCount = () => {
     const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -256,3 +266,4 @@
 </script>
 </body>
 </html>
+
