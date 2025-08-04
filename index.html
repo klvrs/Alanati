@@ -277,11 +277,12 @@ productContainer.appendChild(item);
   }
 }
 function updateCartUI(id) {
-  const actionDiv = document.getElementById(cart-actions-${id});
+  const actionDiv = document.getElementById(`cart-actions-${id}`);
   const item = cart.find(i => i.id === id);
 
   if (!item) {
-    actionDiv.innerHTML = <button onclick="addToCart(${id})">Add to Cart</button>;
+actionDiv.innerHTML = `<button onclick="addToCart(${id})">Add to Cart</button>`;
+
     return;
   }
 
@@ -335,4 +336,5 @@ function updateCartUI(id) {
 </script>
 </body>
 </html>
+
 
