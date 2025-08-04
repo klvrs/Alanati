@@ -119,20 +119,24 @@
 </head>
 <body>
 <!-- Inside <header> add a container to align title and profile -->
-<header style="display: flex; justify-content: space-between; align-items: center;">
-  <div>అలానాటి</div>
-  <div id="user-section" style="margin-right: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-    <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User" width="30" height="30" />
-    <span id="user-name" style="font-size: 1rem;"></span>
-  </div>
+<header>
+ అలానాటి
 </header>
 
-<!-- Update nav to remove Login and Sign Up -->
 <nav>
   <a href="#">Home</a>
   <a href="#products">Products</a>
-  <a href="./cart.html" class="link" src="./cart.html">Cart</a>
+  <a href="./cart.html">Cart</a>
+  <div id="userProfile" style="position: relative;">
+    <button id="profileBtn" style="background: none; border: none; color: #fff; font-weight: bold; cursor: pointer;">
+      👤 <span id="profileName">Login</span>
+    </button>
+    <div id="profileDropdown" style="display: none; position: absolute; right: 0; background: white; color: black; border: 1px solid #ccc; padding: 0.5rem; border-radius: 5px; top: 100%; z-index: 10;">
+      <button id="logoutBtn" style="background-color: var(--vintage-brown); color: white; padding: 0.3rem 0.8rem; border: none; cursor: pointer; border-radius: 4px;">Logout</button>
+    </div>
+  </div>
 </nav>
+
 
 
 
@@ -169,7 +173,7 @@
   <footer class="footer">
     &copy; &copy; 2025 ALANATI India | Crafted with nostalgia by klvrs
   </footer>
-  <script type="module">
+ <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
@@ -183,7 +187,45 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Handle Add to Cart
+  const profileName = document.getElementById("profileName");
+  const profileBtn = document.getElementById("profileBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  // Show user name or "Login"
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      profileName.textContent = user.displayName || "User";
+      logoutBtn.style.display = "block";
+    } else {
+      profileName.textContent = "Login";
+      logoutBtn.style.display = "none";
+    }
+  });
+
+  // Toggle dropdown or redirect to login
+  profileBtn.addEventListener("click", () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        profileDropdown.style.display = profileDropdown.style.display === "block" ? "none" : "block";
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+  });
+
+  // Logout handler
+  logoutBtn.addEventListener("click", () => {
+    signOut(auth)
+      .then(() => {
+        window.location.href = "index.html"; // redirect after logout
+      })
+      .catch((error) => {
+        console.error("Logout error", error);
+      });
+  });
+
+  // Add to Cart button logic
   window.handleAddToCart = function () {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -193,20 +235,9 @@
       }
     });
   };
-
-  // Show user info in header
-  const userNameSpan = document.getElementById("user-name");
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const name = user.displayName || user.email;
-      userNameSpan.textContent = name;
-    } else {
-      userNameSpan.innerHTML = `<a href="login.html" style="color: white; text-decoration: underline;">Login</a>`;
-    }
-  });
 </script>
 
 </body>
 </html>
+
 
