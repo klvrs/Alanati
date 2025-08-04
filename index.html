@@ -226,22 +226,23 @@
       item.className = "product-card";
       const existing = cart.find(ci => ci.id === p.id);
       const qty = existing ? existing.qty : 0;
-     item.innerHTML = 
-  <img src="${p.image}" alt="${p.name}" />
-  <h3>${p.name}</h3>
-  <p>${p.description}</p>
-  <p><strong>₹${p.price}</strong></p>
-  <div id="cart-actions-${p.id}">
-    ${qty > 0
-      ? 
-        <button onclick="decreaseQty(${p.id})">➖</button>
-        <span style="margin: 0 10px;">${qty}</span>
-        <button onclick="addToCart(${p.id})">➕</button>
-      
-      : <button onclick="addToCart(${p.id})">Add to Cart</button>
-    }
-  </div>
-;
+     item.innerHTML = `
+      <img src="${p.image}" alt="${p.name}" />
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      <p><strong>₹${p.price}</strong></p>
+      <div id="cart-actions-${p.id}">
+        ${
+          qty > 0
+            ? `
+              <button onclick="decreaseQty(${p.id})">➖</button>
+              <span style="margin: 0 10px;">${qty}</span>
+              <button onclick="addToCart(${p.id})">➕</button>
+            `
+            : `<button onclick="addToCart(${p.id})">Add to Cart</button>`
+        }
+      </div>
+    `;
 productContainer.appendChild(item);
      
     });
@@ -284,12 +285,11 @@ function updateCartUI(id) {
     return;
   }
 
-  actionDiv.innerHTML = 
+  actionDiv.innerHTML = `
     <button onclick="decreaseQty(${id})">➖</button>
     <span style="margin: 0 10px;">${item.qty}</span>
     <button onclick="addToCart(${id})">➕</button>
-  ;
-}
+  `;
 
   const updateCartCount = () => {
     const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -303,7 +303,7 @@ function updateCartUI(id) {
     if (user) {
       userNameSpan.textContent = user.displayName || user.email;
     } else {
-      userNameSpan.innerHTML = <a href="login.html" style="color: white; text-decoration: underline;">Login</a>;
+     userNameSpan.innerHTML = `<a href="login.html" style="color: white; text-decoration: underline;">Login</a>`;
     }
   });
 
@@ -335,3 +335,4 @@ function updateCartUI(id) {
 </script>
 </body>
 </html>
+
